@@ -1,0 +1,1 @@
+This smart contract uses Inheritance and Interfaces because is Ownable and Access Control Design Patterns because the suppliers should be verified so they can add a product.
