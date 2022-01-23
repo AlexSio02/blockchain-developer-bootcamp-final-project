@@ -126,7 +126,7 @@ contract CustomSupCh is Ownable {
   
 
   function buyItem(uint id) payable public paidEnough(items[id].price){
-    (bool sent, bytes memory data) = items[id].supplier.call{value: items[id].price}("");
+    (bool sent, bytes memory data) = payable(items[id].supplier).call{value: items[id].price}("");
     require(sent, "Failed");
     // items[id].buyer = payable(msg.sender);
     items[id].state=State.Sold;
@@ -136,7 +136,5 @@ contract CustomSupCh is Ownable {
 
   }
 
-
-}
     
     

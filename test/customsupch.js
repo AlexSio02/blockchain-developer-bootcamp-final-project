@@ -22,6 +22,21 @@ contract("CustomSupCh", accounts => {
     assert.equal(p, 1, "Product not created!")
   });
 
+  it("only whitelisted addresses can create a product", async () => {
+    // const c = await CustomSupCh.deployed()
+    let c = await CustomSupCh.new()
+
+    let owner = accounts[0]
+    let supplier = accounts[1]
+    let buyer = accounts[5]
+
+    truffleAssert.reverts(c.createProduct("Product0", 1, {
+      from:buyer
+    }), "You are not Whitelisted.")
+
+
+  });
+
   it("allows the contract owner to add new supplier", async () => {
     // const c = await CustomSupCh.deployed()
     let c = await CustomSupCh.new()
@@ -76,35 +91,5 @@ contract("CustomSupCh", accounts => {
     p = await c.items(1)
 
     assert.equal(p.state.words[0], 1, "Item state is not sold")
-  });
-
-  it("item shipped", async () => {
-    let c = await CustomSupCh.new()
-    let owner = accounts[0]
-    let supplier = accounts[5]
-    let buyer = accounts[7]
-
-    await c.addWhitelistedUser( supplier, {
-      from: owner
-    })
-
-    await c.createProduct("Product0", 2, {
-      from:supplier
-    })
-
-    let p = await c.items(1)
-
-    await c.buyItem(p.id.words[0], {
-      from: buyer,
-      value: web3.utils.toWei('2', 'ether')
-    })
-
-    await c.shipItem(p.id.words[0], {
-      from: supplier
-    })
-
-    p = await c.items(1)
-
-    assert.equal(p.state.words[0], 2, "Item state is not shipped")
   });
 });
