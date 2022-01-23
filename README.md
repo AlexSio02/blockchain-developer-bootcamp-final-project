@@ -16,10 +16,15 @@ Due to time limitations, I didn't manage to deploy my contract to a testnet or u
 
 # Preresquities
 npm : 8.1.2
+
 nodejs : 16.13.0
+
 ganache : 2.5.4
+
 Truffle : 5.4.16
+
 solidity : 0.8.0
+
 web3js : 1.5.3
 
 # Contract deployment
